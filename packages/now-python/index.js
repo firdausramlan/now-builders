@@ -8,9 +8,10 @@ const { createLambda } = require('@now/build-utils/lambda.js'); // eslint-disabl
 const downloadAndInstallPip = require('./download-and-install-pip');
 
 async function pipInstall(pipPath, workDir, ...args) {
-  console.log(`running "pip install -t ${workDir} ${args.join(' ')}"...`);
+  console.log(`running "pip install --target ${workDir} ${args.join(' ')}"...`);
   try {
-    await execa(pipPath, ['install', '-t', workDir, ...args], {
+    await execa(pipPath, ['install', '--target', '.', ...args], {
+      cwd: workDir,
       stdio: 'inherit',
     });
   } catch (err) {
